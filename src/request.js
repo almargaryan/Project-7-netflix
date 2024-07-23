@@ -1,0 +1,50 @@
+const API_KEY = '152c8b59a9b6c242a536ba6e6c6dd497';
+
+const requests = {
+    fetchTrending: `/trending/all/week?api_key=${API_KEY}&language=en-US`,
+
+    fetchUpcoming: `/movie/upcoming?api_key=${API_KEY}&language=en-US`,
+    fetchTopRatedMovies: `/movie/top_rated?api_key=${API_KEY}&language=en-US`,
+    fetchAction: `/discover/movie?api_key=${API_KEY}&with_genres=28`,
+    fetchAdventure: `/discover/movie?api_key=${API_KEY}&with_genres=12`,
+    fetchComedy: `/discover/movie?api_key=${API_KEY}&with_genres=35`,
+    fetchCrime: `/discover/movie?api_key=${API_KEY}&with_genres=80`,
+    fetchHorror: `/discover/movie?api_key=${API_KEY}&with_genres=27`,
+    fetchThriller: `/discover/movie?api_key=${API_KEY}&with_genres=53`,
+    fetchWestern: `/discover/movie?api_key=${API_KEY}&with_genres=37`,
+    fetchRomance: `/discover/movie?api_key=${API_KEY}&with_genres=10749`,
+    fetchFantasy: `/discover/movie?api_key=${API_KEY}&with_genres=14`,
+    fetchMystery: `/discover/movie?api_key=${API_KEY}&with_genres=9648`,
+    fetchScienceFiction: `/discover/movie?api_key=${API_KEY}&with_genres=878`,
+    fetchDrama: `/discover/movie?api_key=${API_KEY}&with_genres=18`,
+    fetchKids: `/discover/movie?api_key=${API_KEY}&with_genres=14&with_genres=16`,
+    fetchFamily: `/discover/movie?api_key=${API_KEY}&with_genres=10751`,
+    fetchMusic: `/discover/movie?api_key=${API_KEY}&with_genres=10402`,
+    fetchBooksBased: `/discover/movie?api_key=${API_KEY}&with_keywords=180547`,
+    fetchSuccessful: `/discover/movie?api_key=${API_KEY}&certification_country=US&certification=R&sort_by=revenue.desc`,
+
+    fetchUpcomingSeries: `/tv/upcoming?api_key=${API_KEY}&language=en-US`,
+    fetchOnlySeries: `/discover/tv?api_key=${API_KEY}&include_adult=false`,
+    fetchTopRatedSeries: `/tv/top_rated?api_key=${API_KEY}&language=en-US`,
+    fetchActionAndAdventureSeries: `/discover/tv?api_key=${API_KEY}&with_genres=10759`,
+    fetchComedySeries: `/discover/tv?api_key=${API_KEY}&with_genres=35`,
+    fetchCrimeSeries: `/discover/tv?api_key=${API_KEY}&with_genres=80`,
+    fetchFamilySeries: `/discover/tv?api_key=${API_KEY}&with_genres=10751`,
+    fetchDramaSeries: `/discover/tv?api_key=${API_KEY}&with_genres=18`,
+    fetchKidsSeries: `/discover/tv?api_key=${API_KEY}&with_genres=10762`,
+    fetchMysterySeries: `/discover/tv?api_key=${API_KEY}&with_genres=9648`,
+    fetchNewsSeries: `/discover/tv?api_key=${API_KEY}&with_genres=10763`,
+    fetchRealitySeries: `/discover/tv?api_key=${API_KEY}&with_genres=10764`,
+    fetchFantasySeries: `/discover/tv?api_key=${API_KEY}&with_genres=10765`,
+    fetchSoapSeries: `/discover/tv?api_key=${API_KEY}&with_genres=10766`,
+    fetchTalkSeries: `/discover/tv?api_key=${API_KEY}&with_genres=10767`,
+    fetchWarPoliticsSeries: `/discover/tv?api_key=${API_KEY}&with_genres=10768`,
+    fetchWesternSeries: `/discover/tv?api_key=${API_KEY}&with_genres=37`,
+    fetchBooksBasedSeries: `/discover/tv?api_key=${API_KEY}&with_keywords=180547`,
+    fetchNetflixOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=213`,
+
+    fetchAiringTodayTvShows: `/tv/airing_today?api_key=${API_KEY}&language=en-US`,
+    fetchOnTheAirTvShows: `/tv/on_the_air?api_key=${API_KEY}&language=en-US`,
+};
+
+export default requests;
