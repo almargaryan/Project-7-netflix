@@ -372,7 +372,7 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
                                 style={{borderRadius:"5px"}}
                                 width="225px"
                                 height="125px"
-                                src={`https://image.tmdb.org/t/p/original/${movie.englishBackdropPath || movie.spanishBackdropPath || movie.russianBackdropPath || movie.portugalBackdropPath || movie.chineseBackdropPath || movie.georgianBackdropPath || movie.italianBackdropPath || movie.backdrop_path || "tdlHJ8KoOd9UgUygCWQ3fKRNkAR.jpg" }`}
+                                src={`https://image.tmdb.org/t/p/w500/${movie.englishBackdropPath || movie.spanishBackdropPath || movie.russianBackdropPath || movie.portugalBackdropPath || movie.chineseBackdropPath || movie.georgianBackdropPath || movie.italianBackdropPath || movie.backdrop_path || "tdlHJ8KoOd9UgUygCWQ3fKRNkAR.jpg" }`}
                                 alt={movie.name || movie.title}
                             />
                         )}

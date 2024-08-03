@@ -353,7 +353,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    bottom: 135px;
+    top: 120px;
 }
 
 .row_audioButton:hover{
@@ -654,7 +654,7 @@
     align-items: center;
 }
 
-.similar-movie-info button{
+.similar-movie-buttons button{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -843,6 +843,7 @@
 .cast-member-movie-details {
     padding: 10px;
     text-align: center;
+    color: white;
 }
 
 .cast-member-movie-details h3 {

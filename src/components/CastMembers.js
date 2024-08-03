@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function CastMembers({ show, onClose, member }) {
     const [movies, setMovies] = useState([]);
+    const [myList, setMyList] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,7 +29,9 @@ function CastMembers({ show, onClose, member }) {
                     portugalBackdropPath: null,
                     chineseBackdropPath: null,
                     georgianBackdropPath: null,
-                    italianBackdropPath: null
+                    italianBackdropPath: null,
+                    maturityRating: null,
+                    inMyList: false
                 }));
 
                 const updatedMovies = await Promise.all(
@@ -45,6 +48,10 @@ function CastMembers({ show, onClose, member }) {
                         const backdrops = imagesResponse.data.backdrops || [];
                         const findBackdrop = (lang) => backdrops.find(backdrop => backdrop.iso_639_1 === lang);
 
+                        const detailsResponse = await axios.get(
+                            `https://api.themoviedb.org/3/movie/${movie.id}?api_key=152c8b59a9b6c242a536ba6e6c6dd497&language=en-US`
+                        );
+
                         return {
                             ...movie,
                             trailerKey: trailer ? trailer.key : '',
@@ -54,12 +61,21 @@ function CastMembers({ show, onClose, member }) {
                             portugalBackdropPath: findBackdrop('pt')?.file_path || null,
                             chineseBackdropPath: findBackdrop('zh')?.file_path || null,
                             georgianBackdropPath: findBackdrop('ka')?.file_path || null,
-                            italianBackdropPath: findBackdrop('it')?.file_path || null
+                            italianBackdropPath: findBackdrop('it')?.file_path || null,
+                            maturityRating: detailsResponse.data.adult ? '18+' : '13+',
+                            releaseDate: detailsResponse.data.release_date ? new Date(detailsResponse.data.release_date).getFullYear() : '2020'
                         };
                     })
                 );
 
-                setMovies(updatedMovies);
+                const savedMyList = JSON.parse(localStorage.getItem('myList')) || [];
+                const finalMovies = updatedMovies.map(movie => ({
+                    ...movie,
+                    inMyList: savedMyList.some(savedMovie => savedMovie.id === movie.id)
+                }));
+
+                setMovies(finalMovies);
+                setMyList(savedMyList);
             } catch (error) {
                 console.error('Error fetching movies by actor:', error);
             }
@@ -72,6 +88,23 @@ function CastMembers({ show, onClose, member }) {
         if (trailerKey) {
             navigate(`/trailer/${trailerKey}`);
         }
+    };
+
+    const handleMyListButtonClick = (movieId) => {
+        const updatedMovies = movies.map(movie => {
+            if (movie.id === movieId) {
+                const updatedMovie = { ...movie, inMyList: !movie.inMyList };
+                const updatedMyList = updatedMovie.inMyList
+                    ? [...myList, updatedMovie]
+                    : myList.filter(m => m.id !== movieId);
+
+                setMyList(updatedMyList);
+                localStorage.setItem('myList', JSON.stringify(updatedMyList));
+                return updatedMovie;
+            }
+            return movie;
+        });
+        setMovies(updatedMovies);
     };
 
     const truncateDescription = (description, maxLength) => {
@@ -108,6 +141,22 @@ function CastMembers({ show, onClose, member }) {
                             </div>
                             <div className="cast-member-movie-details">
                                 <h3>{movie.title}</h3>
+                                    <div className={"similar-movie-buttons"}>
+                                        <div style={{width:"110px", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
+                                            <span style={{width:"50px", height:"30px", display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid white"}}>{movie.maturityRating}</span>
+                                            <span>{movie.releaseDate}</span>
+                                        </div>
+                                        <button
+                                            onClick={() => handleMyListButtonClick(movie.id)}
+                                            className={movie.inMyList ? 'similar-myList active' : 'similar-myList'}
+                                        >
+                                            {movie.inMyList ? (
+                                                <i className="fa fa-check" aria-hidden="true"></i>
+                                            ) : (
+                                                <i className="fa fa-plus" aria-hidden="true"></i>
+                                            )}
+                                        </button>
+                                    </div>
                                 <p>{truncateDescription(movie.overview, 100)}</p> {/* Adjust length as needed */}
                             </div>
                         </div>
