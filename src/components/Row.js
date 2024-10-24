@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Carousel from 'nuka-carousel';
 import Modal from "./Modal";
 import Hls from "hls.js";
+import { VolumeX, Volume2, Play, ChevronDown, ThumbsUp, ThumbsDown, Heart, Check, Plus } from 'lucide-react';
 
 function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
     const [movie, setMovie] = useState([]);
@@ -307,7 +308,7 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
                                     muted={audio}
                                 />
                                 <button onClick={() => handleMuteToggle(movie.id)} className="row_audioButton">
-                                    {audio ? <span style={{display:"flex", alignItems:"center"}}><i className="fa fa-volume-off" aria-hidden="true"></i> <i id={"audio"} className="fa fa-times" aria-hidden="true"></i> </span> : <i className="fa fa-volume-up" aria-hidden="true"></i>}
+                                    {audio ? <span style={{display:"flex", alignItems:"center"}}><VolumeX /> </span> : <Volume2 />}
                                 </button>
                                 {/*    </div>*/}
                                 {/*)}*/}
@@ -317,17 +318,17 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
                                 </div>
                                 <div className="row_buttons">
                                     <div className={"row_trailerButtons"}>
-                                        <div className={"row_playButton"} onClick={() => handleClick(movie)}><i className="fa fa-play" aria-hidden="true"></i></div>
+                                        <div className={"row_playButton"} onClick={() => handleClick(movie)}><Play fill={"black"}/></div>
                                         <button
                                             onClick={() => handleMyListButtonClick(movie)}
                                         >
                                             {myList.some(item => item.id === movie.id) ? (
                                                 <>
-                                                    <i className="fa fa-check" aria-hidden="true"></i>
+                                                    <Check />
                                                 </>
                                             ) : (
                                                 <>
-                                                    <i className="fa fa-plus" aria-hidden="true"></i>
+                                                    <Plus />
                                                 </>
                                             )}
                                         </button>
@@ -336,21 +337,22 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
                                             onMouseEnter={() => handleMenuHover(true)}
                                             onMouseLeave={() => handleMenuHover(false)}
                                         >
-                                            <i className={`fa ${
-                                                liked[movie.id] === 'liked' ? 'fa-thumbs-up' :
-                                                    liked[movie.id] === 'disliked' ? 'fa-thumbs-down' :
-                                                        liked[movie.id] === 'superliked' ? 'fa-heart' : 'fa-thumbs-o-up'
-                                            }`} aria-hidden="true"></i>
+                                            {
+                                                liked[movie.id] === 'liked' ? <ThumbsUp fill={"white"} className={"i"}/> :
+                                                    liked[movie.id] === 'disliked' ? <ThumbsDown fill={"white"} className={"i"}/> :
+                                                        liked[movie.id] === 'superliked' ? <Heart fill={"white"} className={"i"}/> :
+                                                            <ThumbsUp />
+                                            }
                                             {showMenu && (
                                                 <div className="row_likeMenu">
                                                     <button onClick={() => handleLikeButtonClick(movie.id, 'liked')}>
-                                                        {liked[movie.id] === 'liked' ? <i className={`fa fa-thumbs-up`} aria-hidden="true"></i> : <i className={`fa fa-thumbs-o-up`} aria-hidden="true"></i>}
+                                                        {liked[movie.id] === 'liked' ? <ThumbsUp fill={"white"} className={"i"}/> : <ThumbsUp className={"i"} />}
                                                     </button>
                                                     <button onClick={() => handleLikeButtonClick(movie.id, 'disliked')}>
-                                                        {liked[movie.id] === 'disliked' ? <i className={`fa fa-thumbs-down`} aria-hidden="true"></i> : <i className={`fa fa-thumbs-o-down`} aria-hidden="true"></i>}
+                                                        {liked[movie.id] === 'disliked' ? <ThumbsDown fill={"white"} className={"i"}/> : <ThumbsDown className={"i"}/>}
                                                     </button>
                                                     <button onClick={() => handleLikeButtonClick(movie.id, 'superliked')}>
-                                                        {liked[movie.id] === 'superliked' ? <i className={`fa fa-heart`} aria-hidden="true"></i> : <i className={`fa fa-heart-o`} aria-hidden="true"></i>}
+                                                        {liked[movie.id] === 'superliked' ? <Heart fill={"white"} className={"i"}/> : <Heart className={"i"}/>}
                                                     </button>
                                                 </div>
                                             )}
@@ -358,7 +360,7 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
 
                                     </div>
                                     <button onClick={() => handleInfo(movie)} className="infoButton">
-                                        <i className="fa fa-angle-down" aria-hidden="true"></i>
+                                        <ChevronDown />
                                     </button>
                                 </div>
                                 <div className="row_movieInfo">

@@ -2,6 +2,8 @@ import axios from '../axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from './Modal';
+import { VolumeX, Info, Volume2, Play } from 'lucide-react';
+
 
 function Banner({ fetchUrl, isPlaying }) {
     const [movie, setMovie] = useState({});
@@ -182,22 +184,19 @@ function Banner({ fetchUrl, isPlaying }) {
                 )}
                 <div className="banner_buttons">
                     <button onClick={handlePlay} className="banner_play">
-                        <i className="fa fa-play" aria-hidden="true"></i> Play
+                        <Play fill={"black"}/> Play
                     </button>
                     <button onClick={handleInfo} className="banner_info">
-                        <div style={{ width: "25px", height: "25px", border: "1px solid white", borderRadius: "50%" }}>
-                            <i className="fa fa-info" aria-hidden="true"></i>
-                        </div>
+                        <Info size={32}/>
                         More Info
                     </button>
                     <button onClick={handleClick} className="banner_audioButton">
                         {audio ? (
                             <span style={{ display: "flex", alignItems: "center" }}>
-                                <i className="fa fa-volume-off" aria-hidden="true"></i>
-                                <i id="audio" className="fa fa-times" aria-hidden="true"></i>
+                                <VolumeX/>
                             </span>
                         ) : (
-                            <i className="fa fa-volume-up" aria-hidden="true"></i>
+                            <Volume2/>
                         )}
                     </button>
                 </div>

@@ -38,7 +38,7 @@ function Header(props) {
         <div className={`header ${scrolled ? 'scrolled' : ''}`}>
             <div className="header_menu">
                 <Link to={'/'} style={{ textDecoration: "none" }}>
-                    <img src={logo} alt="Logo" width={"125px"} />
+                    <img src={logo} alt="Logo" width={"115px"} />
                 </Link>
                 <Link to={'/'} className={`header_link ${activeIndex === 0 ? 'clicked' : ''}`} onClick={() => handleColor(0)}>Home</Link>
                 <Link to={'/tv_shows'} className={`header_link ${activeIndex === 1 ? 'clicked' : ''}`} onClick={() => handleColor(1)}>TV Shows</Link>
