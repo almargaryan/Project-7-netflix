@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../axios';
 import { useNavigate } from 'react-router-dom';
+import { X, Play, Check, Plus } from 'lucide-react';
 
 function CastMembers({ show, onClose, member }) {
     const [movies, setMovies] = useState([]);
@@ -90,22 +91,27 @@ function CastMembers({ show, onClose, member }) {
         }
     };
 
-    const handleMyListButtonClick = (movieId) => {
-        const updatedMovies = movies.map(movie => {
-            if (movie.id === movieId) {
-                const updatedMovie = { ...movie, inMyList: !movie.inMyList };
-                const updatedMyList = updatedMovie.inMyList
-                    ? [...myList, updatedMovie]
-                    : myList.filter(m => m.id !== movieId);
-
-                setMyList(updatedMyList);
-                localStorage.setItem('myList', JSON.stringify(updatedMyList));
-                return updatedMovie;
-            }
-            return movie;
-        });
-        setMovies(updatedMovies);
+    const addToMyList = (movie) => {
+        const updatedList = [...myList, movie];
+        localStorage.setItem('myList', JSON.stringify(updatedList));
+        setMyList(updatedList);
     };
+
+
+    const removeFromMyList = (movie) => {
+        const updatedList = myList.filter(item => item.id !== movie.id);
+        localStorage.setItem('myList', JSON.stringify(updatedList));
+        setMyList(updatedList);
+    };
+
+
+    const handleMyListButtonClick = (movie) => {
+        if (myList.some(item => item.id === movie.id)) {
+            removeFromMyList(movie);
+        } else {
+            addToMyList(movie);
+        }
+    }
 
     const truncateDescription = (description, maxLength) => {
         if (description.length <= maxLength) return description;
@@ -123,8 +129,8 @@ function CastMembers({ show, onClose, member }) {
     return (
         <div className="cast-member-overlay" onClick={handleOverlayClick}>
             <div className="cast-member">
-                <button className="cast-member-close" onClick={onClose}>
-                    <i className="fa fa-times" aria-hidden="true"></i>
+                <button className="modal-close" onClick={onClose}>
+                    <X className={"icons"}/>
                 </button>
                 <center><h1 className="cast-member-title">{member.name}</h1></center>
                 <div className="cast-member-movies">
@@ -135,26 +141,22 @@ function CastMembers({ show, onClose, member }) {
                                     src={`https://image.tmdb.org/t/p/original/${movie.englishBackdropPath || movie.spanishBackdropPath || movie.russianBackdropPath || movie.portugalBackdropPath || movie.chineseBackdropPath || movie.georgianBackdropPath || movie.italianBackdropPath || movie.poster_path || "tdlHJ8KoOd9UgUygCWQ3fKRNkAR.jpg"}`}
                                     alt={movie.title}
                                 />
-                                <div className="member_play-icon">
-                                    <i className="fa fa-play" aria-hidden="true"></i>
+                                <div className="play-icon">
+                                    <Play size={30} fill={"white"} />
                                 </div>
                             </div>
                             <div className="cast-member-movie-details">
                                 <h3>{movie.title}</h3>
                                     <div className={"similar-movie-buttons"}>
-                                        <div style={{width:"110px", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
-                                            <span style={{width:"50px", height:"30px", display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid white"}}>{movie.maturityRating}</span>
+                                        <div style={{width:"90px", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
+                                            <span style={{width:"40px", height:"25px", display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid white"}}>{movie.maturityRating}</span>
                                             <span>{movie.releaseDate}</span>
                                         </div>
                                         <button
-                                            onClick={() => handleMyListButtonClick(movie.id)}
+                                            onClick={() => handleMyListButtonClick(movie)}
                                             className={movie.inMyList ? 'similar-myList active' : 'similar-myList'}
                                         >
-                                            {movie.inMyList ? (
-                                                <i className="fa fa-check" aria-hidden="true"></i>
-                                            ) : (
-                                                <i className="fa fa-plus" aria-hidden="true"></i>
-                                            )}
+                                            {myList.some(item => item.id === movie.id) ? <Check className={"icons"}/> : <Plus className={"icons"}/>}
                                         </button>
                                     </div>
                                 <p>{truncateDescription(movie.overview, 100)}</p> {/* Adjust length as needed */}

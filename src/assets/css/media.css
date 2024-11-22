@@ -1,0 +1,834 @@
+@media (min-width: 992px) and (max-width: 1200px) {
+
+    #hls-player{
+        width: 100%;
+        height: auto;
+        margin-top: 75px;
+    }
+
+    .header{
+        height: 60px;
+    }
+
+    /* banner.css */
+    .banner-video {
+        margin-top: -18vh;
+        max-width: 120%;
+        height: 93vh;
+    }
+
+    .banner-contents {
+        padding: 125px 60px;
+    }
+
+    .banner-title {
+        width: 60%;
+        font-size: 40px;
+    }
+
+    .banner-title--small {
+        width: 60%;
+        font-size: 30px;
+    }
+
+    .banner-description {
+        width: 600px;
+        height: 150px;
+        padding-top: 10px;
+        font-size: 13px;
+        max-width: 400px;
+    }
+
+    .banner-fadeBottom {
+        top: 46vh;
+        height: 23vh;
+    }
+
+
+    /* row.css */
+    .row {
+        margin-bottom: 250px;
+        margin-top: -225px;
+    }
+
+
+    /* modal.css */
+
+    .modal {
+        width: 70%;
+    }
+
+    .similar-movie-poster img {
+        height: 200px;
+    }
+
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+    #hls-player{
+        width: 100%;
+        height: auto;
+        margin-top: 125px;
+    }
+
+    .header{
+        height: 60px;
+    }
+
+    /* banner.css */
+    .banner-video {
+        margin-top: -15vh;
+        max-width: 110%;
+        height: 75vh;
+    }
+
+    .banner-contents {
+        padding: 225px 60px;
+        height: 20%;
+    }
+
+    .banner-title {
+        width: 60%;
+        font-size: 30px;
+    }
+
+    .banner-title--small {
+        width: 60%;
+        font-size: 30px;
+        margin-top: 0;
+    }
+
+    .banner-description {
+        display: none;
+    }
+
+    .banner-playButton {
+        width: 100px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .banner-infoButton{
+        width: 150px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .banner-audioButton {
+        width: 40px;
+        height: 40px;
+    }
+
+    .icons {
+        width: 20px;
+    }
+
+    .banner-fadeBottom {
+        top: 39vh;
+        height: 20vh;
+    }
+
+    /* row.css */
+    .row {
+        margin-bottom: 325px;
+        margin-top: -300px;
+    }
+
+    .row_posterContainer {
+        width: 200px;
+    }
+
+    .row_posterContainer img {
+        width: 200px;
+        height: 110px;
+    }
+
+    .row_posterContainer.hovered {
+        height: 300px;
+        width: 265px;
+        margin-top: -90px;
+        margin-left: -30px;
+    }
+
+    .row_trailer .trailer_iframe {
+        height: 150px;
+    }
+
+
+    .row_movieTitle{
+        margin-top: 10px;
+    }
+
+    .row_buttons {
+        width: 95%;
+        height: 60px;
+    }
+
+    .row_buttons button {
+        width: 35px;
+        height: 35px;
+    }
+
+    .row_likeMenu {
+        width: 35px;
+        height: 45px;
+    }
+
+    .row_likeMenu:hover {
+        width: 115px;
+    }
+
+    .row_playButton{
+        width: 35px;
+        height: 35px;
+    }
+
+    .row_audioButton {
+        width: 35px;
+        height: 35px;
+        top: 100px;
+    }
+
+    .carousel-button {
+        margin-bottom: -85px;
+    }
+
+    /* modal.css */
+    .modal {
+        width: 80%;
+    }
+
+    .modal-close {
+        width: 30px;
+        height: 30px;
+    }
+
+    .modal_postPic {
+        height: 430px;
+    }
+
+    .modal_title {
+        font-size: 30px;
+        top: 275px;
+    }
+
+    .modal_buttons {
+        bottom: 135px;
+    }
+
+    .modal_buttons button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .modal_likeMenu {
+        width: 40px;
+        height: 50px;
+    }
+
+    .modal_likeMenu:hover {
+        width: 130px;
+    }
+
+    .modal_playButton{
+        width: 110px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .modal-fadeBottom {
+        top: 50vh;
+    }
+
+    .modal-content {
+        margin-top: -10px;
+    }
+
+    .modal_date {
+        font-size: 21px;
+    }
+
+    .modal_description {
+        width: 55%;
+    }
+
+    .modal-similar {
+        margin-bottom: 30px;
+        margin-top: 30px;
+    }
+
+    .modal-similar h2 {
+        font-size: 21px;
+    }
+
+    .similar-movie-info {
+        padding: 10px 10px 25px 10px;
+        text-align: center;
+        color: white;
+        font-size: 14px;
+    }
+
+    .similar-movie-info h4 {
+        font-size: 16px;
+        height: 32px;
+    }
+
+    .similar-movie-buttons{
+        width: 100%;
+        height: 60px;
+    }
+
+    .similar-movie-buttons button{
+        width: 35px;
+        height: 35px;
+    }
+
+    .footer{
+        margin-top: -250px;
+    }
+
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+    #hls-player{
+        width: 100%;
+        height: auto;
+        margin-top: 175px;
+    }
+
+    .header{
+        height: 60px;
+    }
+
+    .header-menu{
+        padding: 0 20px;
+    }
+
+    .header-link{
+        font-size: 13px;
+    }
+
+    .header-logo img {
+        width: 100px;
+    }
+
+    /* banner.css */
+    .banner-video {
+        margin-top: -15vh;
+        max-width: 120%;
+        height: 64vh;
+    }
+
+    .banner-contents {
+        padding: 150px 30px;
+        height: 10%;
+    }
+
+    .banner-title {
+        width: 60%;
+        font-size: 20px;
+    }
+
+    .banner-title--small {
+        width: 60%;
+        font-size: 20px;
+        margin-top: 0;
+    }
+
+    .banner-description {
+        display: none;
+    }
+
+    .banner-playButton {
+        width: 75px;
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .banner-infoButton{
+        width: 115px;
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .banner-audioButton {
+        width: 30px;
+        height: 30px;
+    }
+
+    .icons {
+        width: 15px;
+    }
+
+    .banner-fadeBottom {
+        top: 25vh;
+        height: 24vh;
+    }
+
+    /* row.css */
+    .row {
+        height: 225px;
+        margin-bottom: 425px;
+        margin-top: -375px;
+    }
+
+    .row_title {
+        font-size: 20px;
+        margin-bottom: -85px;
+        margin-left: 30px;
+    }
+
+    .row_posters {
+        padding: 115px 0 25px 30px;
+    }
+
+    .row_posterContainer {
+        width: 200px;
+    }
+
+    .row_posterContainer img {
+        width: 200px;
+        height: 110px;
+    }
+
+    .row_posterContainer.hovered {
+        height: 275px;
+        width: 245px;
+        margin-top: -80px;
+        margin-left: -10px;
+    }
+
+    .row_trailer .trailer_iframe {
+        height: 140px;
+    }
+
+    .row_movieTitle{
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    .row_buttons {
+        width: 95%;
+        height: 50px;
+    }
+
+    .row_buttons button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .row_likeMenu {
+        width: 30px;
+        height: 40px;
+    }
+
+    .row_likeMenu:hover {
+        width: 100px;
+    }
+
+    .row_playButton{
+        width: 30px;
+        height: 30px;
+    }
+
+    .row_audioButton {
+        width: 30px;
+        height: 30px;
+        top: 100px;
+        right: 10px;
+    }
+
+    .row_movieInfo{
+        font-size: 13px;
+    }
+
+    .carousel-button {
+        height: 110px;
+        margin-bottom: -85px;
+    }
+
+    /* modal.css */
+    .modal {
+        width: 80%;
+    }
+
+    .modal-close {
+        width: 25px;
+        height: 25px;
+    }
+
+    .modal_postPic {
+        height: 350px;
+    }
+
+    .modal_title {
+        font-size: 25px;
+        top: 220px;
+    }
+
+    .modal_buttons {
+        bottom: 205px;
+    }
+
+    .modal_buttons button {
+        width: 35px;
+        height: 35px;
+    }
+
+    .modal_likeMenu {
+        width: 35px;
+        height: 45px;
+    }
+
+    .modal_likeMenu:hover {
+        width: 115px;
+    }
+
+    .modal_playButton{
+        width: 95px;
+        height: 35px;
+        font-size: 16px;
+    }
+
+    .modal-fadeBottom {
+        top: 41vh;
+        height: 8vh;
+    }
+
+    .modal-content {
+        margin-top: -70px;
+    }
+
+    .modal_date {
+        font-size: 18px;
+    }
+
+    .modal_description {
+        font-size: 13px;
+        width: 50%;
+    }
+
+    .modal_info {
+        width: 35%;
+        font-size: 13px;
+    }
+
+    .modal-similar h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .similar-movie-poster img {
+        height: 200px;
+    }
+
+    .similar-movie-info {
+        padding: 10px 10px 25px 10px;
+        text-align: center;
+        color: white;
+        font-size: 14px;
+    }
+
+    .similar-movie-info h4 {
+        font-size: 14px;
+        height: 28px;
+    }
+
+    .similar-movie-buttons{
+        width: 100%;
+        height: 50px;
+    }
+
+    .similar-movie-buttons button{
+        width: 30px;
+        height: 30px;
+    }
+
+    .cast-member-movie-poster img {
+        height: 200px;
+    }
+
+    .cast-member-movie-details h3 {
+        font-size: 14px;
+    }
+
+    .cast-member-movie-details p {
+        font-size: 13px;
+    }
+
+    .footer{
+        margin-top: -350px;
+    }
+}
+
+
+@media (max-width: 576px) {
+    #hls-player{
+        width: 100%;
+        height: auto;
+        margin-top: 200px;
+    }
+
+    .header{
+        height: 60px;
+    }
+
+    .header-menu{
+        padding: 0 20px;
+    }
+
+    .header-link{
+        font-size: 13px;
+    }
+
+    .header-logo img {
+        width: 100px;
+    }
+
+    /* banner.css */
+    .banner-video {
+        margin-top: -15vh;
+        height: 59vh;
+    }
+
+    .banner-contents {
+        padding: 125px 30px;
+        height: 10%;
+    }
+
+    .banner-title {
+        width: 60%;
+        font-size: 20px;
+    }
+
+    .banner-title--small {
+        width: 60%;
+        font-size: 20px;
+        margin-top: 0;
+    }
+
+    .banner-description {
+        display: none;
+    }
+
+    .banner-playButton {
+        width: 75px;
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .banner-infoButton{
+        width: 115px;
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .banner-audioButton {
+        width: 30px;
+        height: 30px;
+    }
+
+    .icons {
+        width: 15px;
+    }
+
+    .banner-fadeBottom {
+        top: 20vh;
+        height: 25vh;
+    }
+
+    /* row.css */
+    .row {
+        height: 225px;
+        margin-bottom: 465px;
+        margin-top: -415px;
+    }
+
+    .row_title {
+        font-size: 20px;
+        margin-bottom: -85px;
+        margin-left: 30px;
+    }
+
+    .row_posters {
+        padding: 115px 0 25px 30px;
+    }
+
+    .row_posterContainer {
+        width: 200px;
+    }
+
+    .row_posterContainer img {
+        width: 200px;
+        height: 110px;
+    }
+
+    .row_posterContainer.hovered {
+        height: 275px;
+        width: 245px;
+        margin-top: -80px;
+        margin-left: -10px;
+    }
+
+    .row_trailer .trailer_iframe {
+        height: 140px;
+    }
+
+    .row_movieTitle{
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    .row_buttons {
+        width: 95%;
+        height: 50px;
+    }
+
+    .row_buttons button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .row_likeMenu {
+        width: 30px;
+        height: 40px;
+    }
+
+    .row_likeMenu:hover {
+        width: 100px;
+    }
+
+    .row_playButton{
+        width: 30px;
+        height: 30px;
+    }
+
+    .row_audioButton {
+        width: 30px;
+        height: 30px;
+        top: 100px;
+        right: 10px;
+    }
+
+    .row_movieInfo{
+        font-size: 13px;
+    }
+
+    .carousel-button {
+        height: 110px;
+        margin-bottom: -85px;
+    }
+
+    /* modal.css */
+    .modal {
+        width: 80%;
+    }
+
+    .modal-close {
+        width: 25px;
+        height: 25px;
+    }
+
+    .modal_postPic {
+        height: 350px;
+    }
+
+    .modal_title {
+        font-size: 25px;
+        top: 220px;
+    }
+
+    .modal_buttons {
+        bottom: 205px;
+    }
+
+    .modal_buttons button {
+        width: 35px;
+        height: 35px;
+    }
+
+    .modal_likeMenu {
+        width: 35px;
+        height: 45px;
+    }
+
+    .modal_likeMenu:hover {
+        width: 115px;
+    }
+
+    .modal_playButton{
+        width: 95px;
+        height: 35px;
+        font-size: 16px;
+    }
+
+    .modal-fadeBottom {
+        top: 41vh;
+        height: 8vh;
+    }
+
+    .modal-content {
+        margin-top: -70px;
+    }
+
+    .modal_date {
+        font-size: 18px;
+    }
+
+    .modal_description {
+        font-size: 13px;
+        width: 50%;
+    }
+
+    .modal_info {
+        width: 35%;
+        font-size: 13px;
+    }
+
+    .modal-similar h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .similar-movie-poster img {
+        height: 200px;
+    }
+
+    .similar-movie-info {
+        padding: 10px 10px 25px 10px;
+        text-align: center;
+        color: white;
+        font-size: 14px;
+    }
+
+    .similar-movie-info h4 {
+        font-size: 14px;
+        height: 28px;
+    }
+
+    .similar-movie-buttons{
+        width: 100%;
+        height: 50px;
+    }
+
+    .similar-movie-buttons button{
+        width: 30px;
+        height: 30px;
+    }
+
+    .cast-member-movie-poster img {
+        height: 200px;
+    }
+
+    .cast-member-movie-details h3 {
+        font-size: 14px;
+    }
+
+    .cast-member-movie-details p {
+        font-size: 13px;
+    }
+
+    .footer{
+        margin-top: -350px;
+    }
+}

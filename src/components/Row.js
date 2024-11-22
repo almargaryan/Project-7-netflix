@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Carousel from 'nuka-carousel';
 import Modal from "./Modal";
 import Hls from "hls.js";
-import { VolumeX, Volume2, Play, ChevronDown, ThumbsUp, ThumbsDown, Heart, Check, Plus } from 'lucide-react';
+import { VolumeX, Volume2, Play, ChevronDown, ChevronLeft, ChevronRight, ThumbsUp, ThumbsDown, Heart, Check, Plus } from 'lucide-react';
 
 function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
     const [movie, setMovie] = useState([]);
@@ -15,8 +15,12 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
     const [showModal, setShowModal] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [myList, setMyList] = useState(false);
-    // const [showBackdrop, setShowBackdrop] = useState(true);
+    const [showBackdrop, setShowBackdrop] = useState(true);
+    const [slidesToShow, setSlidesToShow] = useState(6);
+    const [videoHeight, setVideoHeight] = useState("175px");
+    const [videoWidth, setVideoWidth] = useState("305px");
     const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,18 +43,6 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
         fetchData();
     }, [fetchUrl]);
 
-
-    useEffect(() => {
-        const handleLocalStorage = () => {
-            const savedLikeState = JSON.parse(localStorage.getItem('likeState')) || {};
-            setLiked(savedLikeState);
-
-            const savedMyList = JSON.parse(localStorage.getItem('myList')) || [];
-            setMyList(savedMyList);
-        };
-
-        handleLocalStorage();
-    }, []);
 
     const fetchMovieDetails = async (movieId) => {
         try {
@@ -92,8 +84,8 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
     const initializePlayer = (movieId) => {
         const video = document.getElementById(`hls-player-${movieId}`);
         if (video) {
-            video.style.width = '305px';
-            video.style.height = '175px';
+            video.style.width = videoWidth;
+            video.style.height = videoHeight;
             if (Hls.isSupported()) {
                 const hls = new Hls();
                 hls.loadSource('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8');
@@ -131,17 +123,22 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
 
     useEffect(() => {
         if (hoveredMovieId) {
-            // const hoveredMovie = movie.find(m => m.id === hoveredMovieId);
-            // if (hoveredMovie) {
-            //     setShowBackdrop(true);
-            //     const timer = setTimeout(() => {
-            //         setShowBackdrop(false);
-            initializePlayer(hoveredMovieId);
-            //     }, 2000);
-            //     return () => clearTimeout(timer);
-            // }
+            const hoveredMovie = movie.find(m => m.id === hoveredMovieId);
+            if (hoveredMovie) {
+                setShowBackdrop(true);
+                const timer = setTimeout(() => {
+                    setShowBackdrop(false);
+                }, 2000);
+                return () => clearTimeout(timer);
+            }
         }
     }, [hoveredMovieId]);
+
+    useEffect(() => {
+        if (!showBackdrop && hoveredMovieId) {
+            initializePlayer(hoveredMovieId);
+        }
+    }, [showBackdrop, hoveredMovieId]);
 
 
     const handleClick = (movie) => {
@@ -222,7 +219,17 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
         setMyList(updatedList);
     };
 
+    useEffect(() => {
+        const handleLocalStorage = () => {
+            const savedLikeState = JSON.parse(localStorage.getItem('likeState')) || {};
+            setLiked(savedLikeState);
 
+            const savedMyList = JSON.parse(localStorage.getItem('myList')) || [];
+            setMyList(savedMyList);
+        };
+
+        handleLocalStorage();
+    }, []);
 
 
     const handleMyListButtonClick = (movie) => {
@@ -251,14 +258,37 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
         setShowMenu(hover);
     };
 
+    useEffect(() => {
+        const updateSlidesToShow = () => {
+            if (window.innerWidth >= 1200) {
+                setSlidesToShow(4);
+            } else if (window.innerWidth >= 992) {
+                setSlidesToShow(3);
+            } else if (window.innerWidth >= 768) {
+                setVideoHeight("150px")
+                setVideoWidth("265px")
+                setSlidesToShow(2);
+            } else {
+                setVideoHeight("140px")
+                setVideoWidth("250px")
+                setSlidesToShow(1);
+            }
+        };
+
+        updateSlidesToShow();
+        window.addEventListener('resize', updateSlidesToShow);
+
+        return () => window.removeEventListener('resize', updateSlidesToShow);
+    }, []);
+
 
     return (
         <div className="row">
             <h2 className="row_title">{title}</h2>
             <Carousel
                 className="row_posters"
-                slidesToShow={6}
-                slidesToScroll={6}
+                slidesToShow={slidesToShow}
+                slidesToScroll={slidesToShow}
                 dragging={false}
 
 
@@ -268,7 +298,7 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
                         onClick={previousSlide}
                         title="Previous Slide"
                     >
-                        <i className="fa fa-chevron-left" aria-hidden="true"></i>
+                        <ChevronLeft size={32} />
                     </button>
                 )}
                 renderCenterRightControls={({ nextSlide }) => (
@@ -277,7 +307,7 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
                         onClick={nextSlide}
                         title="Next Slide"
                     >
-                        <i className="fa fa-chevron-right" aria-hidden="true"></i>
+                        <ChevronRight size={32} />
                     </button>
                 )}
                 scrollMode={'remainder'}
@@ -292,67 +322,59 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
                     >
                         {hoveredMovieId === movie.id ? (
                             <div className="row_trailer">
-                                {/*{showBackdrop ? (*/}
-                                {/*    <img*/}
-                                {/*        className='trailer_iframe'*/}
-                                {/*        src={`https://image.tmdb.org/t/p/w500${movie.englishBackdropPath}`}*/}
-                                {/*        alt={movie.title}*/}
-                                {/*    />*/}
-                                {/*) : (*/}
-                                {/*    <div>*/}
+                                {showBackdrop ? (
+                                    <img
+                                        className='trailer_iframe'
+                                        src={`https://image.tmdb.org/t/p/w500/${movie.englishBackdropPath || movie.spanishBackdropPath || movie.russianBackdropPath || movie.portugalBackdropPath || movie.chineseBackdropPath || movie.georgianBackdropPath || movie.italianBackdropPath || movie.backdrop_path || "tdlHJ8KoOd9UgUygCWQ3fKRNkAR.jpg" }`}
+                                        alt={movie.title}
+                                    />
+                                ) : (
+                                    <div>
                                 <video
                                     onClick={() => handleClick(movie)}
                                     id={`hls-player-${movie.id}`}
                                     className="trailer_iframe"
                                     autoPlay
                                     muted={audio}
+                                    onEnded={() => setShowBackdrop(true)}
                                 />
                                 <button onClick={() => handleMuteToggle(movie.id)} className="row_audioButton">
-                                    {audio ? <span style={{display:"flex", alignItems:"center"}}><VolumeX /> </span> : <Volume2 />}
+                                    {audio ? <span style={{display:"flex", alignItems:"center"}}><VolumeX className={"icons"}/> </span> : <Volume2 className={"icons"}/>}
                                 </button>
-                                {/*    </div>*/}
-                                {/*)}*/}
+                                    </div>
+                                )}
 
                                 <div className="row_movieTitle">
                                     <span>{movie.title} </span>
                                 </div>
                                 <div className="row_buttons">
                                     <div className={"row_trailerButtons"}>
-                                        <div className={"row_playButton"} onClick={() => handleClick(movie)}><Play fill={"black"}/></div>
+                                        <div className={"row_playButton"} onClick={() => handleClick(movie)}><Play fill={"black"} className={"icons"}/></div>
                                         <button
                                             onClick={() => handleMyListButtonClick(movie)}
                                         >
-                                            {myList.some(item => item.id === movie.id) ? (
-                                                <>
-                                                    <Check />
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Plus />
-                                                </>
-                                            )}
+                                            {myList.some(item => item.id === movie.id) ? <Check className={"icons"}/> : <Plus className={"icons"}/>}
                                         </button>
                                         <button
-                                            className="row_likeButton"
                                             onMouseEnter={() => handleMenuHover(true)}
                                             onMouseLeave={() => handleMenuHover(false)}
                                         >
                                             {
-                                                liked[movie.id] === 'liked' ? <ThumbsUp fill={"white"} className={"i"}/> :
-                                                    liked[movie.id] === 'disliked' ? <ThumbsDown fill={"white"} className={"i"}/> :
-                                                        liked[movie.id] === 'superliked' ? <Heart fill={"white"} className={"i"}/> :
-                                                            <ThumbsUp />
+                                                liked[movie.id] === 'liked' ? <ThumbsUp fill={"white"} className={"i icons"} /> :
+                                                    liked[movie.id] === 'disliked' ? <ThumbsDown fill={"white"} className={"i icons"}/> :
+                                                        liked[movie.id] === 'superliked' ? <Heart fill={"white"} className={"i icons"}/> :
+                                                            <ThumbsUp className={"icons"}/>
                                             }
                                             {showMenu && (
                                                 <div className="row_likeMenu">
                                                     <button onClick={() => handleLikeButtonClick(movie.id, 'liked')}>
-                                                        {liked[movie.id] === 'liked' ? <ThumbsUp fill={"white"} className={"i"}/> : <ThumbsUp className={"i"} />}
+                                                        {liked[movie.id] === 'liked' ? <ThumbsUp fill={"white"} className={"i icons"}/> : <ThumbsUp className={"i icons"} />}
                                                     </button>
                                                     <button onClick={() => handleLikeButtonClick(movie.id, 'disliked')}>
-                                                        {liked[movie.id] === 'disliked' ? <ThumbsDown fill={"white"} className={"i"}/> : <ThumbsDown className={"i"}/>}
+                                                        {liked[movie.id] === 'disliked' ? <ThumbsDown fill={"white"} className={"i icons"}/> : <ThumbsDown className={"i icons"}/>}
                                                     </button>
                                                     <button onClick={() => handleLikeButtonClick(movie.id, 'superliked')}>
-                                                        {liked[movie.id] === 'superliked' ? <Heart fill={"white"} className={"i"}/> : <Heart className={"i"}/>}
+                                                        {liked[movie.id] === 'superliked' ? <Heart fill={"white"} className={"i icons"}/> : <Heart className={"i icons"}/>}
                                                     </button>
                                                 </div>
                                             )}
@@ -360,20 +382,17 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
 
                                     </div>
                                     <button onClick={() => handleInfo(movie)} className="infoButton">
-                                        <ChevronDown />
+                                        <ChevronDown className={"icons"} />
                                     </button>
                                 </div>
                                 <div className="row_movieInfo">
                                     <span>Release Date: {movie.release_date ? new Date(movie.release_date).getFullYear() : '2024'} </span>
-                                    <span style={{width:"40px", height:"20px", display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid white", fontSize:"15px"}}>{movie.adult ? "18+" : "12+"}</span>
+                                    <span style={{width:"36px", height:"18px", display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid white", fontSize:"12px"}}>{movie.adult ? "18+" : "12+"}</span>
                                 </div>
                             </div>
                         ) : (
                             <img
                                 onClick={() => handleClick(movie)}
-                                style={{borderRadius:"5px"}}
-                                width="225px"
-                                height="125px"
                                 src={`https://image.tmdb.org/t/p/w500/${movie.englishBackdropPath || movie.spanishBackdropPath || movie.russianBackdropPath || movie.portugalBackdropPath || movie.chineseBackdropPath || movie.georgianBackdropPath || movie.italianBackdropPath || movie.backdrop_path || "tdlHJ8KoOd9UgUygCWQ3fKRNkAR.jpg" }`}
                                 alt={movie.name || movie.title}
                             />

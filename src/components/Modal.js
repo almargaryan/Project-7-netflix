@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../axios';
 import CastMembers from './CastMembers';
+import { X, Play, ThumbsUp, ThumbsDown, Heart, Check, Plus } from 'lucide-react';
 
 function Modal({ show, onClose, movie, cast = [], trailerKey, genres = [], director, maturityRating }) {
     const [liked, setLiked] = useState({});
@@ -9,7 +10,7 @@ function Modal({ show, onClose, movie, cast = [], trailerKey, genres = [], direc
     const [similarMovies, setSimilarMovies] = useState([]);
     const [showMember, setShowMember] = useState(false);
     const [selectedMember, setSelectedMember] = useState(null);
-    const [inMyList, setInMyList] = useState(false);
+    const [myList, setMyList] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -85,14 +86,16 @@ function Modal({ show, onClose, movie, cast = [], trailerKey, genres = [], direc
 
 
     useEffect(() => {
-        if (movie && movie.id) {
-            const myList = JSON.parse(localStorage.getItem('myList')) || [];
-            const isInList = myList.some(item => item.id === movie.id);
+        const handleLocalStorage = () => {
             const savedLikeState = JSON.parse(localStorage.getItem('likeState')) || {};
             setLiked(savedLikeState);
-            setInMyList(isInList);
-        }
-    }, [movie]);
+
+            const savedMyList = JSON.parse(localStorage.getItem('myList')) || [];
+            setMyList(savedMyList);
+        };
+
+        handleLocalStorage();
+    }, []);
 
     const handleLikeButtonClick = (movieId, likeStatus) => {
         const updatedLiked = { ...liked };
@@ -115,57 +118,28 @@ function Modal({ show, onClose, movie, cast = [], trailerKey, genres = [], direc
         setShowMenu(hover);
     };
 
-    const handleMyListButtonClick = (movieId) => {
-        if (movieId === movie?.id) {
-            if (inMyList) {
-                removeFromMyList(movieId);
-            } else {
-                addToMyList(movieId);
-            }
-        } else {
-            const similarMovieIndex = similarMovies.findIndex(movie => movie.id === movieId);
-            if (similarMovieIndex !== -1) {
-                if (similarMovies[similarMovieIndex].inMyList) {
-                    removeFromMyList(movieId);
-                } else {
-                    addToMyList(movieId);
-                }
-            }
-        }
-    };
 
-
-    const addToMyList = (id) => {
-        const myList = JSON.parse(localStorage.getItem('myList')) || [];
-        const movieToAdd = id === movie.id ? movie : similarMovies.find(m => m.id === id);
-
-        if (movieToAdd && !myList.some(m => m.id === movieToAdd.id)) {
-            const updatedList = [...myList, movieToAdd];
-            localStorage.setItem('myList', JSON.stringify(updatedList));
-
-            if (id === movie.id) {
-                setInMyList(true);
-            } else {
-                setSimilarMovies(similarMovies.map(m =>
-                    m.id === id ? { ...m, inMyList: true } : m
-                ));
-            }
-        }
-    };
-
-    const removeFromMyList = (id) => {
-        const myList = JSON.parse(localStorage.getItem('myList')) || [];
-        const updatedList = myList.filter(item => item.id !== id);
+    const addToMyList = (movie) => {
+        const updatedList = [...myList, movie];
         localStorage.setItem('myList', JSON.stringify(updatedList));
-
-        if (id === movie.id) {
-            setInMyList(false);
-        } else {
-            setSimilarMovies(similarMovies.map(m =>
-                m.id === id ? { ...m, inMyList: false } : m
-            ));
-        }
+        setMyList(updatedList);
     };
+
+
+    const removeFromMyList = (movie) => {
+        const updatedList = myList.filter(item => item.id !== movie.id);
+        localStorage.setItem('myList', JSON.stringify(updatedList));
+        setMyList(updatedList);
+    };
+
+
+    const handleMyListButtonClick = (movie) => {
+        if (myList.some(item => item.id === movie.id)) {
+            removeFromMyList(movie);
+        } else {
+            addToMyList(movie);
+        }
+    }
 
     const handleSimilarMovieClick = (trailerKey) => {
         navigate(`/trailer/${trailerKey}`);
@@ -197,9 +171,9 @@ function Modal({ show, onClose, movie, cast = [], trailerKey, genres = [], direc
         <div className="modal-overlay" onClick={handleOverlayClick}>
             <div className="modal">
                 <div className={"modal_banner"}>
-                    <button className="modal-close" onClick={onClose}>
-                        <i className="fa fa-times" aria-hidden="true"></i>
-                    </button>
+                    <div className="modal-close" onClick={onClose}>
+                        <X className={"icons"}/>
+                    </div>
                     <img
                         className="modal_postPic"
                         src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path }`}
@@ -208,37 +182,33 @@ function Modal({ show, onClose, movie, cast = [], trailerKey, genres = [], direc
                     <h1 className="modal_title">{movie?.title || movie?.name || movie?.original_name}</h1>
                     <div className="modal_buttons">
                         <div onClick={handlePlayButtonClick} className="modal_playButton">
-                            <i className="fa fa-play" aria-hidden="true"></i> <span style={{fontSize:"20px", fontWeight:"bold", marginLeft:"10px"}}> Play</span>
+                            <Play fill={"black"} className={"icons"}/> <span> Play</span>
                         </div>
-                        {inMyList ? (
-                            <button onClick={() => handleMyListButtonClick(movie.id)} className="modal_myList">
-                                <i className="fa fa-check" aria-hidden="true"></i>
-                            </button>
-                        ) : (
-                            <button onClick={() => handleMyListButtonClick(movie.id)} className="modal_myList">
-                                <i className="fa fa-plus" aria-hidden="true"></i>
-                            </button>
-                        )}
                         <button
-                            className="modal_likeButton"
+                            onClick={() => handleMyListButtonClick(movie)}
+                        >
+                            {myList.some(item => item.id === movie.id) ? <Check className={"icons"}/> : <Plus className={"icons"}/>}
+                        </button>
+                        <button
                             onMouseEnter={() => handleMenuHover(true)}
                             onMouseLeave={() => handleMenuHover(false)}
                         >
-                            <i className={`fa ${
-                                liked[movie.id] === 'liked' ? 'fa-thumbs-up' :
-                                    liked[movie.id] === 'disliked' ? 'fa-thumbs-down' :
-                                        liked[movie.id] === 'superliked' ? 'fa-heart' : 'fa-thumbs-o-up'
-                            }`} aria-hidden="true"></i>
+                            {
+                                liked[movie.id] === 'liked' ? <ThumbsUp fill={"white"} className={"i icons"}/> :
+                                    liked[movie.id] === 'disliked' ? <ThumbsDown fill={"white"} className={"i icons"}/> :
+                                        liked[movie.id] === 'superliked' ? <Heart fill={"white"} className={"i icons"}/> :
+                                            <ThumbsUp className={"icons"}/>
+                            }
                             {showMenu && (
                                 <div className="modal_likeMenu">
                                     <button onClick={() => handleLikeButtonClick(movie.id, 'liked')}>
-                                        {liked[movie.id] === 'liked' ? <i className={`fa fa-thumbs-up`} aria-hidden="true"></i> : <i className={`fa fa-thumbs-o-up`} aria-hidden="true"></i>}
+                                        {liked[movie.id] === 'liked' ? <ThumbsUp fill={"white"} className={"i icons"}/> : <ThumbsUp className={"i icons"} />}
                                     </button>
                                     <button onClick={() => handleLikeButtonClick(movie.id, 'disliked')}>
-                                        {liked[movie.id] === 'disliked' ? <i className={`fa fa-thumbs-down`} aria-hidden="true"></i> : <i className={`fa fa-thumbs-o-down`} aria-hidden="true"></i>}
+                                        {liked[movie.id] === 'disliked' ? <ThumbsDown fill={"white"} className={"i icons"}/> : <ThumbsDown className={"i icons"}/>}
                                     </button>
                                     <button onClick={() => handleLikeButtonClick(movie.id, 'superliked')}>
-                                        {liked[movie.id] === 'superliked' ? <i className={`fa fa-heart`} aria-hidden="true"></i> : <i className={`fa fa-heart-o`} aria-hidden="true"></i>}
+                                        {liked[movie.id] === 'superliked' ? <Heart fill={"white"} className={"i icons"}/> : <Heart className={"i icons"}/>}
                                     </button>
                                 </div>
                             )}
@@ -249,8 +219,8 @@ function Modal({ show, onClose, movie, cast = [], trailerKey, genres = [], direc
                 <div className="modal-content">
                     <div style={{display:"flex", justifyContent:"space-between"}}>
                         <span className="modal_description">
-                            <h1 className="modal_date">{movie?.title || movie?.name || movie?.original_name} ({movie?.release_date})</h1>
-                            {movie?.overview}
+                            <h1 className="modal_date">{movie?.title || movie?.name || movie?.original_name} ({movie.release_date ? new Date(movie.release_date).getFullYear() : '2024'})</h1>
+                            {movie.overview || "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
                         </span>
                         <div className="modal_info">
                             <p>
@@ -289,28 +259,26 @@ function Modal({ show, onClose, movie, cast = [], trailerKey, genres = [], direc
                                                     alt={movie.title}
                                                 />
                                                 <div className="play-icon">
-                                                    <i className="fa fa-play" aria-hidden="true"></i>
+                                                    <Play size={30} fill={"white"}/>
                                                 </div>
                                             </div>
                                             <div className="similar-movie-info">
-                                                <h3>{movie.title}</h3>
+                                                <h4>{movie.title}</h4>
                                                 <div className={"similar-movie-buttons"}>
-                                                    <div style={{width:"110px", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
-                                                        <span style={{width:"50px", height:"30px", display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid white"}}>{movie.maturityRating}</span>
+                                                    <div style={{width:"90px", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
+                                                        <span style={{width:"40px", height:"25px", display:"flex", justifyContent:"center", alignItems:"center", border:"1px solid white"}}>{movie.maturityRating}</span>
                                                         <span>{movie.releaseDate}</span>
                                                     </div>
                                                     <button
-                                                        onClick={() => handleMyListButtonClick(movie.id)}
+                                                        onClick={() => handleMyListButtonClick(movie)}
                                                         className={movie.inMyList ? 'similar-myList active' : 'similar-myList'}
                                                     >
-                                                        {movie.inMyList ? (
-                                                            <i className="fa fa-check" aria-hidden="true"></i>
-                                                        ) : (
-                                                            <i className="fa fa-plus" aria-hidden="true"></i>
-                                                        )}
+                                                        {myList.some(item => item.id === movie.id) ? <Check className={"icons"}/> : <Plus className={"icons"}/>}
                                                     </button>
                                                 </div>
-                                                <p>{truncateDescription(movie.overview, 100)}</p> {/* Adjust length as needed */}
+                                                <p>
+                                                    {truncateDescription(movie.overview || "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 100)}
+                                                </p>
                                             </div>
                                         </div>
                                     ))}

@@ -1,11 +1,12 @@
 import React from 'react';
+import { Facebook, Instagram  } from 'lucide-react';
 
-function Footer(props) {
+function Footer() {
     return (
         <div className={"footer"}>
             <div className={"footer_media"}>
-                <a href="https://www.facebook.com/netflix/"><i className="fa fa-facebook" aria-hidden="true"></i></a>
-                <a href="https://www.instagram.com/Netflix"><i className="fa fa-instagram" aria-hidden="true"></i></a>
+                <a href="https://www.facebook.com/netflix/"><Facebook fill={"white"}/></a>
+                <a href="https://www.instagram.com/Netflix"><Instagram /></a>
             </div>
             <div className={"footer_links"}>
                 <div className={"footer_link"}>

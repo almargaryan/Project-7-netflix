@@ -28,7 +28,7 @@ function TrailerPage() {
 
     return (
         <div style={{width: '100%', height: '100vh', position: 'relative', backgroundColor: 'white', overflow:'hidden'}}>
-            <video id="hls-player" style={{width: '100%', height: '120%', marginTop: '-135px'}} controls/>
+            <video id="hls-player" controls/>
         </div>
     );
 }

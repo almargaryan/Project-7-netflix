@@ -104,7 +104,7 @@ function Banner({ fetchUrl, isPlaying }) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowDescription(false);
-        }, 20000);
+        }, 2000);
 
         return () => clearTimeout(timer);
     }, [movie]);
@@ -172,32 +172,26 @@ function Banner({ fetchUrl, isPlaying }) {
 
     return (
         <header className="banner">
-            <div className="banner_background">
-                <div id="player" className="banner_video" ref={videoRef}></div>
+            <div className="banner-background">
+                <div id="player" className="banner-video" ref={videoRef}></div>
             </div>
-            <div className="banner_contents">
-                <h1 className={`banner_title ${!showDescription ? 'banner_title--small' : ''}`}>
+            <div className="banner-contents">
+                <h1 className={`banner-title ${!showDescription ? 'banner-title--small' : ''}`}>
                     {movie?.title || movie?.name || movie?.original_name}
                 </h1>
                 {showDescription && (
-                    <h1 className="banner_description">{movie?.overview}</h1>
+                    <h1 className="banner-description">{movie?.overview}</h1>
                 )}
-                <div className="banner_buttons">
-                    <button onClick={handlePlay} className="banner_play">
-                        <Play fill={"black"}/> Play
+                <div className="banner-buttons">
+                    <button onClick={handlePlay} className="banner-playButton">
+                        <Play fill={"black"} className={"icons"}/> Play
                     </button>
-                    <button onClick={handleInfo} className="banner_info">
-                        <Info size={32}/>
+                    <button onClick={handleInfo} className="banner-infoButton">
+                        <Info size={32} className={"icons"}/>
                         More Info
                     </button>
-                    <button onClick={handleClick} className="banner_audioButton">
-                        {audio ? (
-                            <span style={{ display: "flex", alignItems: "center" }}>
-                                <VolumeX/>
-                            </span>
-                        ) : (
-                            <Volume2/>
-                        )}
+                    <button onClick={handleClick} className="banner-audioButton">
+                        {audio ? <VolumeX className={"icons"} /> : <Volume2 className={"icons"} />}
                     </button>
                 </div>
             </div>
