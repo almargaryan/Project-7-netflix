@@ -19,6 +19,7 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
     const [slidesToShow, setSlidesToShow] = useState(6);
     const [videoHeight, setVideoHeight] = useState("175px");
     const [videoWidth, setVideoWidth] = useState("305px");
+    const [modalClass, setModalClass] = useState('');
     const navigate = useNavigate();
 
 
@@ -259,17 +260,42 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
     };
 
     useEffect(() => {
+        const handleClick = (event) => {
+            const pageWidth = window.innerWidth;
+            const clickX = event.clientX;
+
+            if (clickX < 4 * pageWidth / 10) {
+                setModalClass('modal-left'); // Left side
+            } else if(clickX > 7 * pageWidth / 10) {
+                setModalClass('modal-right'); // Right side
+            } else {
+                setModalClass('modal-center');
+            }
+        };
+
+        document.addEventListener('click', handleClick);
+
+        return () => {
+            document.removeEventListener('click', handleClick);
+        };
+    }, []);
+
+    useEffect(() => {
         const updateSlidesToShow = () => {
             if (window.innerWidth >= 1200) {
                 setSlidesToShow(4);
+                setVideoHeight("175px");
+                setVideoWidth("305px")
             } else if (window.innerWidth >= 992) {
                 setSlidesToShow(3);
+                setVideoHeight("175px");
+                setVideoWidth("305px")
             } else if (window.innerWidth >= 768) {
-                setVideoHeight("150px")
+                setVideoHeight("150px");
                 setVideoWidth("265px")
                 setSlidesToShow(2);
             } else {
-                setVideoHeight("140px")
+                setVideoHeight("140px");
                 setVideoWidth("250px")
                 setSlidesToShow(1);
             }
@@ -411,6 +437,7 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
                     cast={selectedMovie.cast}
                     maturityRating={selectedMovie.maturityRating}
                     trailerKey={selectedMovie.trailerKey}
+                    modalClass={modalClass}
                 />
             )}
         </div>

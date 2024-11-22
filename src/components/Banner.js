@@ -104,7 +104,7 @@ function Banner({ fetchUrl, isPlaying }) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowDescription(false);
-        }, 2000);
+        }, 20000);
 
         return () => clearTimeout(timer);
     }, [movie]);
@@ -206,6 +206,7 @@ function Banner({ fetchUrl, isPlaying }) {
                 maturityRating={maturityRating}
                 director={director}
                 player={player}
+                modalClass={`modal-left`}
             />
         </header>
     );

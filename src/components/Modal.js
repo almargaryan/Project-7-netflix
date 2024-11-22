@@ -4,7 +4,7 @@ import axios from '../axios';
 import CastMembers from './CastMembers';
 import { X, Play, ThumbsUp, ThumbsDown, Heart, Check, Plus } from 'lucide-react';
 
-function Modal({ show, onClose, movie, cast = [], trailerKey, genres = [], director, maturityRating }) {
+function Modal({ show, onClose, movie, cast = [], trailerKey, genres = [], director, maturityRating, modalClass }) {
     const [liked, setLiked] = useState({});
     const [showMenu, setShowMenu] = useState(false);
     const [similarMovies, setSimilarMovies] = useState([]);
@@ -165,11 +165,13 @@ function Modal({ show, onClose, movie, cast = [], trailerKey, genres = [], direc
         return `${description.slice(0, maxLength)}...`;
     };
 
+
+
     if (!show || !movie) return null;
 
     return (
         <div className="modal-overlay" onClick={handleOverlayClick}>
-            <div className="modal">
+            <div className={`modal ${modalClass}`}>
                 <div className={"modal_banner"}>
                     <div className="modal-close" onClick={onClose}>
                         <X className={"icons"}/>
