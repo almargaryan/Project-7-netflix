@@ -423,7 +423,7 @@
     justify-content: center;
     align-items: center;
     z-index: 999;
-    animation: fadeIn 0.5s ease-out; /* Fade in effect */
+    animation: fadeIn 0.5s ease-out;
 }
 
 @keyframes fadeIn {
@@ -446,10 +446,10 @@
     margin: 20px;
     box-sizing: border-box;
     z-index: 100;
-    animation: expand-right 0.5s ease 0s 1 normal forwards; /* Animation for expanding modal */
+    animation: expand-right 0.5s ease 0s 1 normal forwards;
 }
 
-/* Animation for the modal expanding from the center */
+
 @keyframes expand-right {
     0% {
         transform: scale(0.5);
@@ -473,10 +473,10 @@
     margin: 20px;
     box-sizing: border-box;
     z-index: 100;
-    animation: expand-left 0.5s ease 0s 1 normal forwards; /* Animation for expanding modal */
+    animation: expand-left 0.5s ease 0s 1 normal forwards;
 }
 
-/* Animation for the modal expanding from the center */
+
 @keyframes expand-left {
     0% {
         transform: scale(0.5);
@@ -499,10 +499,9 @@
     margin: 20px;
     box-sizing: border-box;
     z-index: 100;
-    animation: expand-center 0.5s ease 0s 1 normal forwards; /* Animation for expanding modal */
+    animation: expand-center 0.5s ease 0s 1 normal forwards;
 }
 
-/* Animation for the modal expanding from the center */
 @keyframes expand-center {
     0% {
         transform: scale(0.5);

@@ -44,7 +44,7 @@ function Header() {
                 <Link to={'/tv_shows'} className={`header-link ${activeIndex === 1 ? 'clicked' : ''}`} onClick={() => handleColor(1)}>TV Shows</Link>
                 <Link to={'/movies'} className={`header-link ${activeIndex === 2 ? 'clicked' : ''}`} onClick={() => handleColor(2)}>Movies</Link>
                 <Link to={'/latest'} className={`header-link ${activeIndex === 3 ? 'clicked' : ''}`} onClick={() => handleColor(3)}>Latest</Link>
-                <Link to={'/my_list'} className={`header-link ${activeIndex === 4 ? 'clicked' : ''}`} onClick={() => handleColor(4)}>My List</Link>
+                {/*<Link to={'/my_list'} className={`header-link ${activeIndex === 4 ? 'clicked' : ''}`} onClick={() => handleColor(4)}>My List</Link>*/}
             </div>
         </div>
     );

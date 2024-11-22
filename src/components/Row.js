@@ -265,9 +265,9 @@ function Row({ title, fetchUrl, onVideoPlay, onVideoStop }) {
             const clickX = event.clientX;
 
             if (clickX < 4 * pageWidth / 10) {
-                setModalClass('modal-left'); // Left side
+                setModalClass('modal-left');
             } else if(clickX > 7 * pageWidth / 10) {
-                setModalClass('modal-right'); // Right side
+                setModalClass('modal-right');
             } else {
                 setModalClass('modal-center');
             }

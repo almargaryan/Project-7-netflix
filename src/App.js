@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import TVShows from "./pages/TVShows";
 import Latest from "./pages/Latest";
 import Movies from "./pages/Movies";
-import MyList from "./components/MyList";
+// import MyList from "./components/MyList";
 import Trailer from "./components/Trailer";
 import Modal from "./components/Modal";
 import CastMembers from "./components/CastMembers";
@@ -17,7 +17,7 @@ function App(props) {
                 <Route path={'/tv_shows'} element={<TVShows/>}/>
                 <Route path={'/movies'} element={<Movies/>}/>
                 <Route path={'/latest'} element={<Latest/>}/>
-                <Route path={'/my_list'} element={<MyList/>}/>
+                {/*<Route path={'/my_list'} element={<MyList/>}/>*/}
                 <Route path="/trailer/:trailerKey" element={<Trailer />} />
                 <Route path="/modal/:movieId" element={<Modal />} />
                 <Route path="/cast/:castId" element={<CastMembers />} />
